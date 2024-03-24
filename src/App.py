@@ -45,7 +45,7 @@ class MusicPlayerApp:
         for file in os.listdir(os.path.expanduser('~') + "\Music"):
             if file.endswith(".mp3"):
                 self.mp3_files.append(file)
-                self.mp3_listbox.insert(tk.END, file)
+                self.mp3_listbox.insert(tk.END, file[:-4])
                 
     def on_file_select(self, event):
         # Get the index of the selected item in the listbox
@@ -62,8 +62,9 @@ class MusicPlayerApp:
                 file_path = self.mp3_files[self.current_song_index]
                 pygame.mixer.music.load(os.path.expanduser('~') + "\Music\\" + file_path)
                 pygame.mixer.music.play()
-                self.play_button.config(text="Pause")
+                self.play_button.config(text="Stop")
                 self.update_progress()
+
         self.playing = not self.playing
     
     def update_progress(self):
@@ -77,7 +78,6 @@ class MusicPlayerApp:
             self.playing = False
     
 def main():
-    # Initialize pygame mixer
     pygame.mixer.init()
     root = tk.Tk()
     sv_ttk.set_theme("dark")
